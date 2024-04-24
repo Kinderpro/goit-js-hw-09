@@ -40,8 +40,8 @@ function loadFromLs(key) {
 }
 
 function onLoad() {
-  formEl.elements.email.value = loadFromLs(STORAGE_KEY).email || 'Anonym';
-  formEl.elements.message.value = loadFromLs(STORAGE_KEY).message;
+  formEl.elements.email.value = loadFromLs(STORAGE_KEY).email || "Anonym";
+  formEl.elements.message.value = loadFromLs(STORAGE_KEY).message 
 }
 
 onLoad();
