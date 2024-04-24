@@ -14,8 +14,8 @@ function onFormInput(evt) {
 
 function onFormSubmit(e) {
   e.preventDefault();
-  const emailName = formEl.elements.email.value.trim();
-  const messageVal = formEl.elements.message.value.trim();
+  const emailName = formEl.email.value.trim();
+  const messageVal = formEl.message.value.trim();
   if (emailName === '' || messageVal === '') {
     return alert('Будь ласка, заповніть усі поля форми!');
   }
@@ -30,18 +30,34 @@ function saveToLs(key, value) {
   localStorage.setItem(key, JSON.stringify(value));
 }
 
-function loadFromLs(key) {
-  const data = localStorage.getItem(key);
+function onLoad() {
   try {
-    return JSON.parse(data);
+    const email = (formEl.email.value = JSON.parse(
+      localStorage.getItem(STORAGE_KEY)
+    ).email);
+    const text = (formEl.message.value = JSON.parse(
+      localStorage.getItem(STORAGE_KEY)
+    ).message);
+    return email, text;
   } catch {
-    return data;
+    return localStorage.getItem(STORAGE_KEY);
   }
 }
-
-function onLoad() {
-  formEl.elements.email.value = loadFromLs(STORAGE_KEY).email || "Anonym";
-  formEl.elements.message.value = loadFromLs(STORAGE_KEY).message 
-}
-
 onLoad();
+// function loadFromLs(key) {
+//   const data = localStorage.getItem(key);
+//   try {
+//     return JSON.parse(data);
+//   } catch {
+//     return data;
+//   }
+// }
+
+// function onLoad() {
+
+//   formEl.email.value = loadFromLs(STORAGE_KEY)
+//   formEl.message.value = loadFromLs(STORAGE_KEY)
+//
+// }
+
+// onLoad();
