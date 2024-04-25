@@ -7,9 +7,10 @@ const STORAGE_KEY = 'feedback-form-state';
 let objForm = {};
 
 function onFormInput(evt) {
-  const { name, value } = evt.target;
+  const name = evt.target.name;
+  const value = evt.target.value;
   objForm[name] = value.trim();
-  saveToLs(STORAGE_KEY, objForm);
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(objForm));
 }
 
 function onFormSubmit(e) {
@@ -26,38 +27,18 @@ function onFormSubmit(e) {
   e.target.reset();
 }
 
-function saveToLs(key, value) {
-  localStorage.setItem(key, JSON.stringify(value));
-}
-
 function onLoad() {
   try {
-    const email = (formEl.email.value = JSON.parse(
-      localStorage.getItem(STORAGE_KEY)
-    ).email);
-    const text = (formEl.message.value = JSON.parse(
-      localStorage.getItem(STORAGE_KEY)
-    ).message);
-    return email, text;
+    const data = localStorage.getItem(STORAGE_KEY);
+    if (!data) return;
+    objForm = JSON.parse(data);
+    for (let key in objForm) {
+      formEl.elements[key].value = objForm[key];
+    }
   } catch {
-    return localStorage.getItem(STORAGE_KEY);
+    {
+      message;
+    }
   }
 }
-onLoad();
-// function loadFromLs(key) {
-//   const data = localStorage.getItem(key);
-//   try {
-//     return JSON.parse(data);
-//   } catch {
-//     return data;
-//   }
-// }
-
-// function onLoad() {
-
-//   formEl.email.value = loadFromLs(STORAGE_KEY)
-//   formEl.message.value = loadFromLs(STORAGE_KEY)
-//
-// }
-
-// onLoad();
+onLoad()
